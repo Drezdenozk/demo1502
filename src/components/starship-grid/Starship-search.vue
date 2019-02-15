@@ -1,58 +1,49 @@
 <template>
-  <div class="starship-card">
-    <router-link :to="consumeURL(info.url)"
-                 tag="div"
-                 :class="'starship-card--block'"
-    >
-      <div class="starship-card--name">
-        {{info.name}}
-      </div>
-    </router-link>
+  <div class="starship-search">
+    <label class="starship-search--label" for="search">Search</label>
+    <input class="starship-search--input" type="text" id="search"
+           @input="save" v-model="search" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Starship',
-  props: {
-    info: {
-      type: Object,
-      required: true,
-    },
+  name: 'Paginator',
+  data() {
+    return {
+      search: '',
+    };
+  },
+  created() {
+    if (this.$route.query.search) {
+      this.search = this.$route.query.search;
+    }
   },
   methods: {
-    consumeURL(url) {
-      try {
-        const id = url.split('/');
-        return `/starship/${id[id.length - 2]}`;
-      } catch (e) {
-        return '/404';
-      }
+    save() {
+      this.$emit('search', this.search);
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-  .starship-card {
-    margin: 0 0px 20px;
-    padding: 0 20px;
-    width: 25%;
-    &--block {
-      text-align: center;
-      border: 1px solid black;
-      border-radius: 5px;
-      padding: 20px 0;
-      transition: 500ms all ease;
+  .starship-search {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 40px;
+
+    .starship-search--label {
+      line-height: 24px;
+      margin-right: 20px;
     }
-    &--name {
-      font-size: 13px;
-    }
-    &:hover {
-      .starship-card--block {
-        cursor: pointer;
-        box-shadow: 0px 0px 16px 6px #bebebe;
-      }
+
+    .starship-search--input {
+      width: 100%;
+      padding: 0 5px;
     }
   }
 </style>

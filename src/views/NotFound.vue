@@ -1,15 +1,15 @@
 <template>
-  <div class="about">
-    <h1>About</h1>
-    <p>Something about Amazing Author of this project</p>
+  <div class="notFound">
+    <h1>404</h1>
+    <p>Nothing found, sorry</p>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'about',
+  name: 'notFound',
   metaInfo: {
-    title: 'About this awesome App',
+    title: '404',
   },
 };
 </script>

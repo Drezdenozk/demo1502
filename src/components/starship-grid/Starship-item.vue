@@ -1,13 +1,13 @@
 <template>
   <div class="starship-card">
-    <div class="starship-card--block">
-      <router-link :to="`/starship/1`"
-                   tag="div"
-                   :class="'starship-card--name'"
-      >
+    <router-link :to="consumeURL(info.url)"
+                 tag="div"
+                 :class="'starship-card--block'"
+    >
+      <div class="starship-card--name">
         {{info.name}}
-      </router-link>
-    </div>
+      </div>
+    </router-link>
   </div>
 </template>
 
@@ -18,6 +18,16 @@ export default {
     info: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    consumeURL(url) {
+      try {
+        const id = url.split('/');
+        return `/starship/${id[id.length - 2]}`;
+      } catch (e) {
+        return '/404';
+      }
     },
   },
 };

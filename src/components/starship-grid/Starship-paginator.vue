@@ -1,49 +1,69 @@
 <template>
-  <div class="starship-search">
-    <label class="starship-search--label" for="search">Search</label>
-    <input class="starship-search--input" type="text" id="search"
-           @input="save" v-model="search" />
+  <div class="starship-pagination">
+    <button class="starship-pagination--page"
+            :class="{'starship-pagination--page__disabled': currentPage === 1}"
+            @click="currentPage === 1 ? undefined : prev()">-prev</button>
+    <div v-for="page in total" :key="`p-${page}`">
+      <button class="starship-pagination--page"
+              @click="$emit('changePage', page)"
+              :class="{'starship-pagination--page__active': currentPage === page}">
+        {{page}}
+      </button>
+    </div>
+    <button class="starship-pagination--page"
+            :class="{'starship-pagination--page__disabled': currentPage === total}"
+            @click="currentPage === total ? undefined : next()">next-</button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Search',
-  data() {
-    return {
-      search: '',
-    };
+  name: 'Paginator',
+  props: {
+    total: {
+      required: true,
+      type: Number,
+    },
   },
-  created() {
-    if (this.$route.query.search) {
-      this.search = this.$route.query.search;
-    }
+  computed: {
+    currentPage() {
+      return parseInt(this.$route.query.page, 10) || 1;
+    },
   },
   methods: {
-    save() {
-      this.$emit('search', this.search);
+    next() {
+      this.$emit('changePage', this.currentPage + 1);
+    },
+    prev() {
+      this.$emit('changePage', this.currentPage - 1);
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-  .starship-search {
+  .starship-pagination {
     display: flex;
-    justify-content: space-between;
-    width: 200px;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 40px;
+    justify-content: center;
+    padding-bottom: 20px;
 
-    .starship-search--label {
-      line-height: 24px;
-      margin-right: 20px;
-    }
+    &--page {
+      margin: 0 10px;
+      &__active {
+        background: grey;
+        border-color: grey;
+        color: white;
+      }
 
-    .starship-search--input {
-      width: 100%;
-      padding: 0 5px;
+      &__disabled {
+        cursor: none;
+        opacity: 0.5;
+        color: grey;
+      }
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 </style>
