@@ -1,21 +1,21 @@
 # demo_1502
 
-## Project setup
+## Установка
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### DEV режим
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### PROD режим
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Запуск готового PROD
 ```
-npm run lint
+npm run start
 ```
